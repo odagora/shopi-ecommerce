@@ -1,8 +1,10 @@
+import { Layout } from "../../components/Layout";
+
 function SignIn() {
   return (
-    <div className="bg-red-100">
+    <Layout>
       <p>Sign in</p>
-    </div>
+    </Layout>
   );
 }
 
