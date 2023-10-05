@@ -1,12 +1,12 @@
 import { BrowserRouter, useRoutes } from "react-router-dom";
-import Home from "../Home";
-import MyAccount from "../MyAccount";
-import MyOrder from "../MyOrder";
-import MyOrders from "../MyOrders";
-import NotFound from "../NotFound";
-import SignIn from "../SignIn";
+import Home from "@/pages/Home";
+import MyAccount from "@/pages/MyAccount";
+import MyOrder from "@/pages/MyOrder";
+import MyOrders from "@/pages/MyOrders";
+import NotFound from "@/pages/NotFound";
+import SignIn from "@/pages/SignIn";
 import "./App.css";
-import { Navbar } from "../../components/Navbar";
+import { Navbar } from "@/components/Navbar";
 
 const AppRouter = () => {
   let routes = useRoutes([
