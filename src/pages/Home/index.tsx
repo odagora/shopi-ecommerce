@@ -9,16 +9,17 @@ function Home() {
   const [products, setProducts] = useState<Product[] | null>(null);
 
   useEffect(() => {
-    function fetchData() {
-      fetch(url)
-        .then((data) => data.json())
-        .then((items) => setProducts(items))
-        .catch((error) =>
-          console.error("An error ocurred while retrieving data: ", error)
-        );
+    async function run() {
+      try {
+        const response = await fetch(url);
+        const data: Product[] = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("An error ocurred while retrieving data: ", error);
+      }
     }
 
-    fetchData();
+    run();
   }, []);
 
   return (
