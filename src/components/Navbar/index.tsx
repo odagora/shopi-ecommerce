@@ -1,3 +1,5 @@
+import { AppContextProps } from "@/context";
+import { useAppContext } from "@/hooks/useAppContext";
 import { NavLink } from "react-router-dom";
 
 interface NavItemProps {
@@ -19,6 +21,8 @@ const NavItem = ({ to, children }: NavItemProps) => {
 };
 
 export const Navbar = () => {
+  const { count } = useAppContext() as AppContextProps;
+
   return (
     <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light">
       <ul className="flex items-center gap-3">
@@ -55,7 +59,7 @@ export const Navbar = () => {
         <li>
           <NavItem to="/sign-in">Sign In</NavItem>
         </li>
-        <li>🛒 0</li>
+        <li>🛒 {count}</li>
       </ul>
     </nav>
   );

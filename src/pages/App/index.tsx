@@ -7,6 +7,7 @@ import NotFound from "@/pages/NotFound";
 import SignIn from "@/pages/SignIn";
 import "./App.css";
 import { Navbar } from "@/components/Navbar";
+import { AppProvider } from "@/context";
 
 const AppRouter = () => {
   let routes = useRoutes([
@@ -23,10 +24,12 @@ const AppRouter = () => {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppRouter />
-      <Navbar />
-    </BrowserRouter>
+    <AppProvider>
+      <BrowserRouter>
+        <AppRouter />
+        <Navbar />
+      </BrowserRouter>
+    </AppProvider>
   );
 }
 
