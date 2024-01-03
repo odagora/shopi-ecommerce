@@ -3,6 +3,7 @@ import { Layout } from "@/components/Layout";
 import { useState, useEffect } from "react";
 import { apiBaseUrl } from "@/services/api";
 import { Product } from "@/models/Product";
+import { ProductDetail } from "@/components/ProductDetail";
 
 function Home() {
   const url = `${apiBaseUrl}/products`;
@@ -30,6 +31,7 @@ function Home() {
           <Card key={product.id} {...product} />
         ))}
       </div>
+      <ProductDetail />
     </Layout>
   );
 }
