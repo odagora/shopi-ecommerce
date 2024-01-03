@@ -1,5 +1,6 @@
 import { AppContextProps } from "@/context";
 import { useAppContext } from "@/hooks/useAppContext";
+import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import { NavLink } from "react-router-dom";
 
 interface NavItemProps {
@@ -59,7 +60,10 @@ export const Navbar = () => {
         <li>
           <NavItem to="/sign-in">Sign In</NavItem>
         </li>
-        <li>🛒 {count}</li>
+        <li className="flex items-center">
+          <ShoppingBagIcon className="h-5 w-5" />
+          <div>{count}</div>
+        </li>
       </ul>
     </nav>
   );

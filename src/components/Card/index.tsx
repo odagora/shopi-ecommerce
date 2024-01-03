@@ -1,6 +1,7 @@
 import { Product } from "@/models/Product";
 import { useAppContext } from "@/hooks/useAppContext";
 import { AppContextProps } from "@/context";
+import { PlusIcon } from "@heroicons/react/20/solid";
 
 export const Card = (props: Product) => {
   const { count, setCount } = useAppContext() as AppContextProps;
@@ -25,12 +26,12 @@ export const Card = (props: Product) => {
           className="absolute top-0 right-0 bg-white/60 rounded-full w-6 h-6 m-2 p-1 text-xs"
           onClick={handleClick}
         >
-          +
+          <PlusIcon />
         </button>
       </figure>
       <p className="flex justify-between">
         <span className="text-sm font-light">{props.title}</span>
-        <span className="text-lg font-medium">{props.price}</span>
+        <span className="text-lg font-medium">${props.price}</span>
       </p>
     </article>
   );
