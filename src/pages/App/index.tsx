@@ -8,6 +8,7 @@ import SignIn from "@/pages/SignIn";
 import "./App.css";
 import { Navbar } from "@/components/Navbar";
 import { AppProvider } from "@/context";
+import { CheckoutSideMenu } from "@/components/CheckoutSideMenu";
 
 const AppRouter = () => {
   let routes = useRoutes([
@@ -28,6 +29,7 @@ function App() {
       <BrowserRouter>
         <AppRouter />
         <Navbar />
+        <CheckoutSideMenu />
       </BrowserRouter>
     </AppProvider>
   );

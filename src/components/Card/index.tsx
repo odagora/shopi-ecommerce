@@ -8,9 +8,12 @@ export const Card = (product: Product) => {
     count,
     setCount,
     openProductDetail,
+    closeProductDetail,
     setProductToShow,
     cartProducts,
     setCartProducts,
+    openCheckoutSideMenu,
+    closeCheckoutSideMenu,
   } = useAppContext();
 
   function handleClick(
@@ -19,10 +22,13 @@ export const Card = (product: Product) => {
     event.stopPropagation();
     setCount(count + 1);
     addProductToCart(product);
+    openCheckoutSideMenu();
+    closeProductDetail();
   }
 
   function showProduct(ProductDetail: Product) {
     openProductDetail();
+    closeCheckoutSideMenu();
     setProductToShow(ProductDetail);
   }
 
