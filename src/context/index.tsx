@@ -17,6 +17,8 @@ export interface AppContextProps {
   closeProductDetail: () => void;
   productToShow: Product | EmptyObj;
   setProductToShow: Dispatch<SetStateAction<Product | EmptyObj>>;
+  cartProducts: Product[] | [];
+  setCartProducts: Dispatch<SetStateAction<Product[] | []>>;
 }
 
 export const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -24,6 +26,8 @@ export const AppContext = createContext<AppContextProps | undefined>(undefined);
 export function AppProvider({ children }: PropsWithChildren) {
   // Shopping Cart - Increment quantity
   const [count, setCount] = useState<number>(0);
+  // Shopping Cart - Add to cart
+  const [cartProducts, setCartProducts] = useState<Product[] | []>([]);
 
   // Product Detail - Open/Close
   const [isProductDetailOpen, setIsProductDetailOpen] =
@@ -42,6 +46,8 @@ export function AppProvider({ children }: PropsWithChildren) {
     closeProductDetail,
     productToShow,
     setProductToShow,
+    cartProducts,
+    setCartProducts,
   };
 
   return (

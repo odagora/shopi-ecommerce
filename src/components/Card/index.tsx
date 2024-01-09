@@ -4,19 +4,30 @@ import { useAppContext } from "@/hooks/useAppContext";
 import { PlusIcon } from "@heroicons/react/20/solid";
 
 export const Card = (product: Product) => {
-  const { count, setCount, openProductDetail, setProductToShow } =
-    useAppContext();
+  const {
+    count,
+    setCount,
+    openProductDetail,
+    setProductToShow,
+    cartProducts,
+    setCartProducts,
+  } = useAppContext();
 
   function handleClick(
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
   ) {
     event.stopPropagation();
     setCount(count + 1);
+    addProductToCart(product);
   }
 
   function showProduct(ProductDetail: Product) {
     openProductDetail();
     setProductToShow(ProductDetail);
+  }
+
+  function addProductToCart(productData: Product) {
+    setCartProducts([...cartProducts, productData]);
   }
 
   return (
