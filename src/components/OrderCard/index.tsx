@@ -4,10 +4,11 @@ interface Props {
   title: string;
   price: number;
   imageUrl: string;
+  handleClick: () => void;
 }
 
 export const OrderCard = (props: Props) => {
-  const { title, price, imageUrl } = props;
+  const { title, price, imageUrl, handleClick } = props;
 
   return (
     <article className="flex justify-between items-center mb-3">
@@ -24,7 +25,7 @@ export const OrderCard = (props: Props) => {
       </div>
       <div className="flex items-center gap-2">
         <p className="text-lg font-medium">${price}</p>
-        <XMarkIcon className="h-6 w-6 cursor-pointer" />
+        <XMarkIcon className="h-6 w-6 cursor-pointer" onClick={handleClick} />
       </div>
     </article>
   );

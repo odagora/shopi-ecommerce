@@ -3,8 +3,22 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import { OrderCard } from "@/components/OrderCard";
 
 export const CheckoutSideMenu = () => {
-  const { isCheckoutSideMenuOpen, closeCheckoutSideMenu, cartProducts } =
-    useAppContext();
+  const {
+    isCheckoutSideMenuOpen,
+    closeCheckoutSideMenu,
+    cartProducts,
+    setCartProducts,
+    count,
+    setCount,
+  } = useAppContext();
+
+  function deleteProductFromCart(id: number) {
+    const updatedCartProducts = cartProducts.filter(
+      (product) => product.id !== id
+    );
+    setCartProducts(updatedCartProducts);
+    setCount(count - 1);
+  }
 
   return (
     <aside
@@ -26,6 +40,7 @@ export const CheckoutSideMenu = () => {
             imageUrl={product.images[0]}
             title={product.title}
             price={product.price}
+            handleClick={() => deleteProductFromCart(product.id)}
           />
         ))}
       </div>
