@@ -1,6 +1,7 @@
 import { useAppContext } from "@/hooks/useAppContext";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { OrderCard } from "@/components/OrderCard";
+import { totalPrice } from "@/utils";
 
 export const CheckoutSideMenu = () => {
   const {
@@ -37,12 +38,20 @@ export const CheckoutSideMenu = () => {
         {cartProducts.map((product) => (
           <OrderCard
             key={product.id}
-            imageUrl={product.images[0]}
+            imageUrl={product.category.image}
             title={product.title}
             price={product.price}
             handleClick={() => deleteProductFromCart(product.id)}
           />
         ))}
+      </div>
+      <div className="p-6">
+        <p className="flex justify-between items-center">
+          <span className="font-medium text-2xl">Total:</span>
+          <span className="font-medium text-2xl">
+            ${totalPrice(cartProducts)}
+          </span>
+        </p>
       </div>
     </aside>
   );
