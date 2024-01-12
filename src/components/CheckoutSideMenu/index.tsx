@@ -11,6 +11,8 @@ export const CheckoutSideMenu = () => {
     setCartProducts,
     count,
     setCount,
+    order,
+    setOrder,
   } = useAppContext();
 
   function deleteProductFromCart(id: number) {
@@ -19,6 +21,18 @@ export const CheckoutSideMenu = () => {
     );
     setCartProducts(updatedCartProducts);
     setCount(count - 1);
+  }
+
+  function handleCheckout() {
+    const orderToAdd = {
+      date: new Date(),
+      products: cartProducts,
+      totalProducts: cartProducts.length,
+      totalPrice: totalPrice(cartProducts),
+    };
+    setOrder([...order, orderToAdd]);
+    setCartProducts([]);
+    setCount(0);
   }
 
   return (
@@ -34,7 +48,7 @@ export const CheckoutSideMenu = () => {
           onClick={closeCheckoutSideMenu}
         />
       </div>
-      <div className="px-6">
+      <div className="px-6 flex-1">
         {cartProducts.map((product) => (
           <OrderCard
             key={product.id}
@@ -45,13 +59,22 @@ export const CheckoutSideMenu = () => {
           />
         ))}
       </div>
-      <div className="p-6">
-        <p className="flex justify-between items-center">
+      <div className="px-6">
+        <p className="flex justify-between items-center mb-2">
           <span className="font-medium text-2xl">Total:</span>
           <span className="font-medium text-2xl">
             ${totalPrice(cartProducts)}
           </span>
         </p>
+        <button
+          className={`py-3 text-white w-full rounded-lg mb-6 ${
+            !cartProducts.length ? "bg-black/40 cursor-not-allowed" : "bg-black"
+          }`}
+          onClick={() => handleCheckout()}
+          disabled={!cartProducts.length}
+        >
+          Checkout
+        </button>
       </div>
     </aside>
   );

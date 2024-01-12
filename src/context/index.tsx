@@ -22,6 +22,8 @@ export interface AppContextProps {
   isCheckoutSideMenuOpen: boolean;
   openCheckoutSideMenu: () => void;
   closeCheckoutSideMenu: () => void;
+  order: Array<Product[]> | [];
+  setOrder: Dispatch<SetStateAction<Array<Record<string, any>>>>;
 }
 
 export const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -36,6 +38,8 @@ export function AppProvider({ children }: PropsWithChildren) {
     useState<boolean>(false);
   const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
   const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
+  // Shopping Cart - New order
+  const [order, setOrder] = useState<Array<Record<string, any>> | []>([]);
 
   // Product Detail - Open/Close
   const [isProductDetailOpen, setIsProductDetailOpen] =
@@ -59,6 +63,8 @@ export function AppProvider({ children }: PropsWithChildren) {
     isCheckoutSideMenuOpen,
     openCheckoutSideMenu,
     closeCheckoutSideMenu,
+    order,
+    setOrder,
   };
 
   return (
