@@ -8,14 +8,16 @@ function MyOrders() {
 
   return (
     <Layout>
-      <div className="flex items-center justify-center relative w-80 mb-6">
+      <div className="flex items-center justify-center relative w-96 mb-6">
         <p>My Orders</p>
       </div>
-      {orders.map((order, index) => (
-        <Link key={index} to={`/my-orders/${order.id}`}>
-          <OrdersCard {...order} />
-        </Link>
-      ))}
+      <div className="flex flex-col gap-3 w-96">
+        {orders.map((order, index) => (
+          <Link key={index} to={`/my-orders/${index}`}>
+            <OrdersCard {...order} />
+          </Link>
+        ))}
+      </div>
     </Layout>
   );
 }

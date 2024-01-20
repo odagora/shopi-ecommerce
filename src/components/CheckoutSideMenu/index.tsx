@@ -27,7 +27,6 @@ export const CheckoutSideMenu = () => {
 
   function handleCheckout() {
     const orderToAdd: OrderProps = {
-      id: orders.length + 1,
       date: new Date(),
       products: cartProducts,
       totalProducts: cartProducts.length,
