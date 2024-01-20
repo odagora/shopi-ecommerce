@@ -8,6 +8,12 @@ import {
 } from "react";
 
 type EmptyObj = Record<PropertyKey, never>;
+export type Order = {
+  date: Date;
+  products: Product[];
+  totalProducts: number;
+  totalPrice: number;
+};
 
 export interface AppContextProps {
   count: number;
@@ -22,8 +28,8 @@ export interface AppContextProps {
   isCheckoutSideMenuOpen: boolean;
   openCheckoutSideMenu: () => void;
   closeCheckoutSideMenu: () => void;
-  order: Array<Product[]> | [];
-  setOrder: Dispatch<SetStateAction<Array<Record<string, any>>>>;
+  orders: Array<Order> | [];
+  setOrders: Dispatch<SetStateAction<Array<Order>>>;
 }
 
 export const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -39,7 +45,7 @@ export function AppProvider({ children }: PropsWithChildren) {
   const openCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(true);
   const closeCheckoutSideMenu = () => setIsCheckoutSideMenuOpen(false);
   // Shopping Cart - New order
-  const [order, setOrder] = useState<Array<Record<string, any>> | []>([]);
+  const [orders, setOrders] = useState<Array<Order> | []>([]);
 
   // Product Detail - Open/Close
   const [isProductDetailOpen, setIsProductDetailOpen] =
@@ -63,8 +69,8 @@ export function AppProvider({ children }: PropsWithChildren) {
     isCheckoutSideMenuOpen,
     openCheckoutSideMenu,
     closeCheckoutSideMenu,
-    order,
-    setOrder,
+    orders,
+    setOrders,
   };
 
   return (

@@ -2,6 +2,8 @@ import { useAppContext } from "@/hooks/useAppContext";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { OrderCard } from "@/components/OrderCard";
 import { totalPrice } from "@/utils";
+import { Link } from "react-router-dom";
+import { Order } from "@/context";
 
 export const CheckoutSideMenu = () => {
   const {
@@ -11,8 +13,8 @@ export const CheckoutSideMenu = () => {
     setCartProducts,
     count,
     setCount,
-    order,
-    setOrder,
+    orders,
+    setOrders,
   } = useAppContext();
 
   function deleteProductFromCart(id: number) {
@@ -24,15 +26,16 @@ export const CheckoutSideMenu = () => {
   }
 
   function handleCheckout() {
-    const orderToAdd = {
+    const orderToAdd: Order = {
       date: new Date(),
       products: cartProducts,
       totalProducts: cartProducts.length,
       totalPrice: totalPrice(cartProducts),
     };
-    setOrder([...order, orderToAdd]);
+    setOrders([...orders, orderToAdd]);
     setCartProducts([]);
     setCount(0);
+    closeCheckoutSideMenu();
   }
 
   return (
@@ -66,15 +69,19 @@ export const CheckoutSideMenu = () => {
             ${totalPrice(cartProducts)}
           </span>
         </p>
-        <button
-          className={`py-3 text-white w-full rounded-lg mb-6 ${
-            !cartProducts.length ? "bg-black/40 cursor-not-allowed" : "bg-black"
-          }`}
-          onClick={() => handleCheckout()}
-          disabled={!cartProducts.length}
-        >
-          Checkout
-        </button>
+        <Link to="my-orders/last">
+          <button
+            className={`py-3 text-white w-full rounded-lg mb-6 ${
+              !cartProducts.length
+                ? "bg-black/40 cursor-not-allowed"
+                : "bg-black"
+            }`}
+            onClick={() => handleCheckout()}
+            disabled={!cartProducts.length}
+          >
+            Checkout
+          </button>
+        </Link>
       </div>
     </aside>
   );
