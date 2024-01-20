@@ -3,7 +3,7 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import { OrderCard } from "@/components/OrderCard";
 import { totalPrice } from "@/utils";
 import { Link } from "react-router-dom";
-import { Order } from "@/context";
+import { OrderProps } from "@/components/OrdersCard";
 
 export const CheckoutSideMenu = () => {
   const {
@@ -26,7 +26,8 @@ export const CheckoutSideMenu = () => {
   }
 
   function handleCheckout() {
-    const orderToAdd: Order = {
+    const orderToAdd: OrderProps = {
+      id: orders.length + 1,
       date: new Date(),
       products: cartProducts,
       totalProducts: cartProducts.length,
