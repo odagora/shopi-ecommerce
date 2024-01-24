@@ -1,10 +1,13 @@
 import { OrderProps } from "@/components/OrdersCard";
 import { Product } from "@/models/Product";
+import { apiBaseUrl } from "@/services/api";
 import {
+  ChangeEvent,
   Dispatch,
   PropsWithChildren,
   SetStateAction,
   createContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -25,6 +28,10 @@ export interface AppContextProps {
   closeCheckoutSideMenu: () => void;
   orders: Array<OrderProps> | [];
   setOrders: Dispatch<SetStateAction<Array<OrderProps>>>;
+  products: Product[] | null;
+  setProducts: Dispatch<SetStateAction<Product[] | null>>;
+  searchByTitle: string;
+  searchProductByTitle: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -51,6 +58,30 @@ export function AppProvider({ children }: PropsWithChildren) {
   // Product Detail - Show product
   const [productToShow, setProductToShow] = useState<Product | EmptyObj>({});
 
+  //Get all products from API
+  const [products, setProducts] = useState<Product[] | null>([]);
+
+  //Get products by Title
+  const [searchByTitle, setSearchByTitle] = useState<string>("");
+  const searchProductByTitle = (event: ChangeEvent<HTMLInputElement>) =>
+    setSearchByTitle(event.target.value);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const url = `${apiBaseUrl}/products`;
+
+      try {
+        const response = await fetch(url);
+        const data: Product[] = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("An error ocurred while retrieving data: ", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const contextData: AppContextProps = {
     count,
     setCount,
@@ -66,6 +97,10 @@ export function AppProvider({ children }: PropsWithChildren) {
     closeCheckoutSideMenu,
     orders,
     setOrders,
+    products,
+    setProducts,
+    searchByTitle,
+    searchProductByTitle,
   };
 
   return (
