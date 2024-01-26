@@ -32,6 +32,7 @@ export interface AppContextProps {
   setProducts: Dispatch<SetStateAction<Product[] | null>>;
   searchByTitle: string;
   searchProductByTitle: (event: ChangeEvent<HTMLInputElement>) => void;
+  filteredProducts: Product[] | null;
 }
 
 export const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -58,13 +59,23 @@ export function AppProvider({ children }: PropsWithChildren) {
   // Product Detail - Show product
   const [productToShow, setProductToShow] = useState<Product | EmptyObj>({});
 
-  //Get all products from API
+  // Get all products from API
   const [products, setProducts] = useState<Product[] | null>([]);
 
-  //Get products by Title
+  // Get products by Title
   const [searchByTitle, setSearchByTitle] = useState<string>("");
   const searchProductByTitle = (event: ChangeEvent<HTMLInputElement>) =>
     setSearchByTitle(event.target.value);
+
+  // Filter products by Title
+  const [filteredProducts, setFilteredProducts] = useState<Product[] | null>(
+    []
+  );
+  function filterProductsByTitle(products: Product[], input: string) {
+    return products?.filter((product) =>
+      product.title.toLowerCase().includes(input.toLowerCase())
+    );
+  }
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -81,6 +92,12 @@ export function AppProvider({ children }: PropsWithChildren) {
 
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    if (searchByTitle && products) {
+      setFilteredProducts(filterProductsByTitle(products, searchByTitle));
+    }
+  }, [products, searchByTitle]);
 
   const contextData: AppContextProps = {
     count,
@@ -101,6 +118,7 @@ export function AppProvider({ children }: PropsWithChildren) {
     setProducts,
     searchByTitle,
     searchProductByTitle,
+    filteredProducts,
   };
 
   return (

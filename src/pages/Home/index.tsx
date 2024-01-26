@@ -4,9 +4,22 @@ import { ProductDetail } from "@/components/ProductDetail";
 import { useAppContext } from "@/hooks/useAppContext";
 
 function Home() {
-  const { products, searchByTitle, searchProductByTitle } = useAppContext();
+  const { products, searchByTitle, searchProductByTitle, filteredProducts } =
+    useAppContext();
 
-  console.log(searchByTitle);
+  function renderView() {
+    if (searchByTitle.length > 0) {
+      return filteredProducts && filteredProducts.length > 0 ? (
+        filteredProducts?.map((product) => (
+          <Card key={product.id} {...product} />
+        ))
+      ) : (
+        <div>We didn't find any coincidences</div>
+      );
+    } else {
+      return products?.map((product) => <Card key={product.id} {...product} />);
+    }
+  }
 
   return (
     <Layout>
@@ -20,9 +33,7 @@ function Home() {
         onChange={searchProductByTitle}
       />
       <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
-        {products?.map((product) => (
-          <Card key={product.id} {...product} />
-        ))}
+        {renderView()}
       </div>
       <ProductDetail />
     </Layout>
