@@ -33,6 +33,8 @@ export interface AppContextProps {
   searchByTitle: string;
   searchProductByTitle: (event: ChangeEvent<HTMLInputElement>) => void;
   filteredProducts: Product[] | null;
+  searchByCategory: string;
+  setSearchByCategory: Dispatch<SetStateAction<string>>;
 }
 
 export const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -67,13 +69,29 @@ export function AppProvider({ children }: PropsWithChildren) {
   const searchProductByTitle = (event: ChangeEvent<HTMLInputElement>) =>
     setSearchByTitle(event.target.value);
 
-  // Filter products by Title
+  // Get products by Category
+  const [searchByCategory, setSearchByCategory] = useState<string>("");
+
+  // Items filtered by Category
+  const [itemsByCategory, setItemsByCategory] = useState<Product[] | null>([]);
+
+  // Filter products
   const [filteredProducts, setFilteredProducts] = useState<Product[] | null>(
     []
   );
+
+  // Filter products by title
   function filterProductsByTitle(products: Product[], input: string) {
     return products?.filter((product) =>
       product.title.toLowerCase().includes(input.toLowerCase())
+    );
+  }
+
+  // Filter products by category
+  function filterProductsByCategory(products: Product[], category: string) {
+    return products?.filter(
+      (product) =>
+        product.category.name.toLowerCase() === category.toLowerCase()
     );
   }
 
@@ -94,10 +112,26 @@ export function AppProvider({ children }: PropsWithChildren) {
   }, []);
 
   useEffect(() => {
-    if (searchByTitle && products) {
-      setFilteredProducts(filterProductsByTitle(products, searchByTitle));
+    if (searchByCategory !== "all") {
+      if (searchByCategory.length > 0 && products) {
+        setItemsByCategory(
+          filterProductsByCategory(products, searchByCategory)
+        );
+      }
+    } else {
+      setItemsByCategory(products);
     }
-  }, [products, searchByTitle]);
+  }, [searchByCategory]);
+
+  useEffect(() => {
+    if (searchByTitle && itemsByCategory) {
+      setFilteredProducts(
+        filterProductsByTitle(itemsByCategory, searchByTitle)
+      );
+    } else {
+      setFilteredProducts(itemsByCategory);
+    }
+  }, [searchByTitle, itemsByCategory]);
 
   const contextData: AppContextProps = {
     count,
@@ -119,6 +153,8 @@ export function AppProvider({ children }: PropsWithChildren) {
     searchByTitle,
     searchProductByTitle,
     filteredProducts,
+    searchByCategory,
+    setSearchByCategory,
   };
 
   return (

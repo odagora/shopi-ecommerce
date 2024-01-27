@@ -8,7 +8,10 @@ function Home() {
     useAppContext();
 
   function renderView() {
-    if (searchByTitle.length > 0) {
+    if (
+      searchByTitle.length > 0 ||
+      filteredProducts?.length !== products?.length
+    ) {
       return filteredProducts && filteredProducts.length > 0 ? (
         filteredProducts?.map((product) => (
           <Card key={product.id} {...product} />
