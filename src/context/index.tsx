@@ -112,16 +112,16 @@ export function AppProvider({ children }: PropsWithChildren) {
   }, []);
 
   useEffect(() => {
-    if (searchByCategory !== "all") {
-      if (searchByCategory.length > 0 && products) {
-        setItemsByCategory(
-          filterProductsByCategory(products, searchByCategory)
-        );
-      }
-    } else {
+    if (!searchByCategory || searchByCategory === "all") {
       setItemsByCategory(products);
+      return;
     }
-  }, [searchByCategory]);
+
+    if (products && searchByCategory) {
+      setItemsByCategory(filterProductsByCategory(products, searchByCategory));
+    }
+    return () => setSearchByTitle("");
+  }, [products, searchByCategory]);
 
   useEffect(() => {
     if (searchByTitle && itemsByCategory) {

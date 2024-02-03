@@ -4,23 +4,15 @@ import { ProductDetail } from "@/components/ProductDetail";
 import { useAppContext } from "@/hooks/useAppContext";
 
 function Home() {
-  const { products, searchByTitle, searchProductByTitle, filteredProducts } =
-    useAppContext();
+  const { searchProductByTitle, filteredProducts } = useAppContext();
 
   function renderView() {
-    if (
-      searchByTitle.length > 0 ||
-      filteredProducts?.length !== products?.length
-    ) {
-      return filteredProducts && filteredProducts.length > 0 ? (
-        filteredProducts?.map((product) => (
-          <Card key={product.id} {...product} />
-        ))
-      ) : (
-        <div>We didn't find any coincidences</div>
-      );
+    if (filteredProducts && filteredProducts?.length > 0) {
+      return filteredProducts?.map((product) => (
+        <Card key={product.id} {...product} />
+      ));
     } else {
-      return products?.map((product) => <Card key={product.id} {...product} />);
+      return <div>We didn't find any coincidences</div>;
     }
   }
 
